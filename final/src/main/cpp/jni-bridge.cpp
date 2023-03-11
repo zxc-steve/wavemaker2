@@ -18,6 +18,7 @@
 #include <android/log.h>
 
 #include "AudioEngine.h"
+#include "LogCallback.h"
 
 extern "C" {
 

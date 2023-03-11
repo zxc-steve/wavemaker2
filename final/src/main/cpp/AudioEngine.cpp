@@ -20,13 +20,16 @@
 #include <android/log.h>
 #include <thread>
 #include <mutex>
-
+#include "LogCallback.h"
+int recordingCallbackSum=0,playbackCallbackSum=0;
+LogCallback recordingLog("record"),playbackLog("playback");
 aaudio_data_callback_result_t recordingDataCallback(
         AAudioStream __unused *stream,
         void *userData,
         void *audioData,
         int32_t numFrames) {
-
+    recordingCallbackSum+=numFrames;
+    recordingLog.add(numFrames);
     return ((AudioEngine *) userData)->recordingCallback(
             static_cast<float *>(audioData), numFrames);
 }
@@ -36,7 +39,8 @@ aaudio_data_callback_result_t playbackDataCallback(
         void *userData,
         void *audioData,
         int32_t numFrames) {
-
+    playbackCallbackSum+=numFrames;
+    playbackLog.add(numFrames);
     return ((AudioEngine *) userData)->playbackCallback(static_cast<float *>(audioData), numFrames);
 }
 
@@ -72,7 +76,7 @@ StreamBuilder makeStreamBuilder(){
 }
 
 void AudioEngine::start() {
-
+    recordingCallbackSum=playbackCallbackSum=0;
     // Create the playback stream.
     StreamBuilder playbackBuilder = makeStreamBuilder();
     AAudioStreamBuilder_setFormat(playbackBuilder.get(), AAUDIO_FORMAT_PCM_FLOAT);

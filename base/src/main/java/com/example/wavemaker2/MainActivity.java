@@ -18,9 +18,11 @@ package com.example.wavemaker2;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
+//import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
